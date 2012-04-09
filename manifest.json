@@ -1,0 +1,28 @@
+{
+	"BundleType":"Application",
+	"AppTitle":{
+		"en":"Bungalow"
+	},
+	"DefaultTabs":[
+		{
+			"title" : {
+				"en":"Overview"
+			},
+			"arguments":"overview"
+		},
+		{
+			"title": {
+				"en" : "Pleasure"
+			},
+			"arguments":"pleasure"
+		}
+	],
+	"Subscriptions":[
+		{
+			"title":{
+				"en":"%s"
+			},
+			"arguments":"bungalow:"
+		}
+	]
+}

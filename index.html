@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>My first bungalow app</title>
+		<script src="bl://import/scripts/api/api.js" type="text/javascript"></script>
+		<script src="bl://test/jquery-1.7.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="bl://import/stylesheets/api.css" type="text/css" />
+		<link rel="stylesheet" href="bl://import/stylesheets/eve.css" type="text/css" />
+		<link rel="stylesheet" href="bl://test/css/style.css" type="text/css" />
+		<script type="text/javascript">
+			var bl = getBungalowApi(1);
+			function init() {
+				var bl = getBungalowApi(1);
+				
+				var models = bl.require("bl://import/scripts/api/models");
+				var views = bl.require("bl://import/scripts/api/views");
+				models.application.observe(models.EVENT.ARGUMENTSCHANGED, function(args2) {
+					var args = models.application.arguments;
+					$("section").each( function (index) {
+						$(this).hide();
+					});
+					$("section#" + args[0]).show();
+					
+				});
+				models.application.observe(models.EVENT.SUBSCRIBED, function(args) {
+				
+					return "My View";
+				});
+				var search = new models.Search("Darude");
+				search.observe(models.EVENT.CHANGE, function() {
+					var tracks = [];
+					search.tracks.forEach(function(track) {
+						tracks.push(track);
+					});
+					var tracklist = new models.Collection(tracks, tracks.length);
+					var list = new views.List(tracklist, function(track) {
+						return new views.Track(track, views.Track.FIELD.SHARE | views.Track.FIELD.NAME | views.Track.FIELD.ALBUM);
+					});
+					document.getElementById("tracklist").appendChild(list.node);
+				});
+				console.log(search);
+				search.appendNext();
+			}
+		</script>
+	</head>
+	<body onload="init()">
+		
+		<h1>A title</h1>
+		<a href="bungalow:app:spotifierad">Spotifierad</a>
+		<section id="overview">Overview
+		
+		<div id="tracklist"></div>
+		</section>
+		<section style="display: none" id="pleasure">Pleasure</section>
+		
+	</body>
+</html>
